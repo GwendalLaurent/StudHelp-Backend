@@ -16,10 +16,10 @@ class CreateAdvertisementsTable extends Migration
         Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
             $table->integer('course_id');
-            $table->string('title');
-            $table->string('descrition');
-            $table->string('user_email');
-            $table->string('type');
+            $table->text('title', );
+            $table->text('descrition');
+            $table->char('user_email', 50);
+            $table->char('type', 50);
         });
     }
 
