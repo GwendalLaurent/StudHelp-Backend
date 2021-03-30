@@ -20,7 +20,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/testing', function(){
-    return ['message' => 'hello'];
+    return User::all();
 });
 
 // Route::get('user', [UserController::class, 'user']);

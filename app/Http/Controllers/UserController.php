@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::all();
     }
 
     /**
@@ -48,7 +48,7 @@ class UserController extends Controller
     public function show($email)
     {
         // Show a single user
-        User::where('email', $email);
+        return User::where('email', $email);
     }
 
     /**
