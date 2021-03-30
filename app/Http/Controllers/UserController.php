@@ -48,7 +48,7 @@ class UserController extends Controller
     public function show($email)
     {
         // Show a single user
-        return User::where('email', $email);
+        return User::where('email', $email)->get();
     }
 
     /**

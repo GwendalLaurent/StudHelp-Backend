@@ -19,21 +19,12 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/testing', function(){
-    return User::all();
-});
-
-// Route::get('user', [UserController::class, 'user']);
-
 // To show all the routes use 'php artisan route:list'
+
+
 Route::resource('user', UserController::class)->only(['index', 'show'])->parameters([
     'user' => 'email', // setting the email as the parameter for user
 ]);
-
-
-// Route::resource([
-//     'user' => UserController::class
-// ]);
 
 // Route::get('/user/{email}', function($email){
 //     User::where('email', $email);
