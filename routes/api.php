@@ -22,7 +22,7 @@ use App\Http\Controllers\UserController;
 // To show all the routes use 'php artisan route:list'
 
 
-Route::resource('user', UserController::class)->only(['index', 'show'])->parameters([
+Route::resource('user', UserController::class)->only(['index', 'store', 'show'])->parameters([
     'user' => 'email', // setting the email as the parameter for user
 ]);
 
