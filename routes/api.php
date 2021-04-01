@@ -7,6 +7,7 @@ use App\Models\User;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\UserHasFavoriteController;
 
 
 /*
@@ -28,6 +29,14 @@ Route::resource('user', UserController::class)->only(['index', 'store', 'show'])
 ]);
 
 Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
+
+// TODO for user has fav
+// get user fav
+// get add new fav for user
+// delete fav for user
+
+Route::get('/favorite/{user_email}', [UserHasFavoriteController::class, 'show']);
+
 
 // Route::get('/user/{email}', function($email){
 //     User::where('email', $email);
