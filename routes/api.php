@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
 
 
 /*
@@ -25,6 +26,8 @@ use App\Http\Controllers\UserController;
 Route::resource('user', UserController::class)->only(['index', 'store', 'show'])->parameters([
     'user' => 'email', // setting the email as the parameter for user
 ]);
+
+Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
 
 // Route::get('/user/{email}', function($email){
 //     User::where('email', $email);
