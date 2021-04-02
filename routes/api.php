@@ -9,6 +9,8 @@ use App\Models\UserHasFavorite;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserHasFavoriteController;
+use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\CourseAdvertisementController;
 
 
 /*
@@ -34,8 +36,13 @@ Route::resource('course', CourseController::class)->only(['index', 'store', 'sho
 Route::resource('favorite', UserHasFavoriteController::class)->only(['show', 'store'])->parameters([
     'favorite' => 'user_email',
 ]);
-
 Route::delete('/favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
+
+// TODO code the routes to get all the ads of a user and all the ads for a course
+Route::resource('user.advertisement', AdvertisementController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+
+Route::resource('course.advertisment', CourseAdvertisementController::class)->only(['index']);
+
 
 // Route::get('/user/{email}', function($email){
 //     User::where('email', $email);
