@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\UserHasFavorite;
 class UserHasFavoriteController extends Controller
 {
 
-    // We don't use those functions because Laravel doesn't support composite keys :'(
+
+    public function deleteFavForUser(Request $request)
+    {
+        return UserHasFavorite::where('user_email', $request->input('user_email'))->where('course_id', $request->input('course_id'))->delete();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,18 +42,18 @@ class UserHasFavoriteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return UserHasFavorite::create($request->all());
     }
 
     /**
-     * Display the specified resource.
+     * Returns the list of favorite courses of the given user
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($user_email)
     {
-        // TODO
+        return UserHasFavorite::where('user_email', $user_email)->get();
     }
 
     /**

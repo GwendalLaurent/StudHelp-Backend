@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\User;
+use App\Models\UserHasFavorite;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
@@ -30,18 +31,16 @@ Route::resource('user', UserController::class)->only(['index', 'store', 'show'])
 
 Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
 
-// TODO for user has fav
-// get user fav
-// get add new fav for user
-// delete fav for user
+Route::resource('favorite', UserHasFavoriteController::class)->only(['show', 'store'])->parameters([
+    'favorite' => 'user_email',
+]);
 
-Route::get('/favorite/{user_email}', [UserHasFavoriteController::class, 'show']);
-
+Route::delete('/favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
 
 // Route::get('/user/{email}', function($email){
 //     User::where('email', $email);
 // });
 
-Route::middleware('auth:api')->get('/auth/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/auth/user', function (Request $request) {
+//     return $request->user();
+// });

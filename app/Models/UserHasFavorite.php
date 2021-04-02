@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserHasFavorite extends Model
 {
+    public $timestamps = false;
+    
     use HasFactory;
+    
+    protected $fillable = [
+        'user_email',
+        'course_id',
+    ];
 }
