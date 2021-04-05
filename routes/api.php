@@ -39,9 +39,9 @@ Route::resource('favorite', UserHasFavoriteController::class)->only(['show', 'st
 Route::delete('/favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
 
 // TODO code the routes to get all the ads of a user and all the ads for a course
-Route::resource('user.advertisement', AdvertisementController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-
-Route::resource('course.advertisment', CourseAdvertisementController::class)->only(['index']);
+Route::resource('user.advertisement', AdvertisementController::class)->only(['index']);
+Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy']);
+Route::resource('course.advertisement', CourseAdvertisementController::class)->only(['index']);
 
 
 // Route::get('/user/{email}', function($email){

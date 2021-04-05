@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
+
 use Illuminate\Http\Request;
 
 class AdvertisementController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get all the adverstisements for a single user.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_email)
     {
-        //
+        return Advertisement::where('user_email', $user_email)->get();
     }
 
     /**
@@ -34,7 +36,7 @@ class AdvertisementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Advertisement::create($request->all());
     }
 
     /**
@@ -45,7 +47,7 @@ class AdvertisementController extends Controller
      */
     public function show($id)
     {
-        //
+        // Not needed right now ?
     }
 
     /**
@@ -68,7 +70,9 @@ class AdvertisementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $ad = Advertisement::find($id);
+       $ad->update($request->all());
+       return $ad;
     }
 
     /**
@@ -79,6 +83,6 @@ class AdvertisementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Advertisement::destroy($id);
     }
 }

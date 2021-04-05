@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
+
 use Illuminate\Http\Request;
 
 class CourseAdvertisementController extends Controller
@@ -11,9 +13,9 @@ class CourseAdvertisementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($course_id)
     {
-        //
+        return Advertisement::where('course_id', $course_id)->get();   
     }
 
     /**
