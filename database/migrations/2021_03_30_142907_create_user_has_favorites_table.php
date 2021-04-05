@@ -16,6 +16,7 @@ class CreateUserHasFavoritesTable extends Migration
         Schema::create('user_has_favorites', function (Blueprint $table) {
             $table->char('user_email', 50);
             $table->integer('course_id');
+            $table->primary(['user_email', 'course_id']);
         });
     }
 

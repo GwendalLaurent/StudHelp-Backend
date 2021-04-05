@@ -14,7 +14,7 @@ class CreateSocialLinksTable extends Migration
     public function up()
     {
         Schema::create('social_links', function (Blueprint $table) {
-            $table->char('user_email', 50);
+            $table->char('user_email', 50)->primary();
             $table->char('discord', 100);
             $table->char('teams', 100);
             $table->char('facebook', 100);
