@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class SocialLink extends Model
 {
+
+    public $timestamps = false; // removing the timestamps
+
     use HasFactory;
+
+    protected $fillable = [
+        'user_email',
+        'discord',
+        'teams',
+        'facebook',
+    ];
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserHasFavoriteController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\CourseAdvertisementController;
+use App\Http\Controllers\SocialLinksController;
 
 
 /*
@@ -38,10 +39,14 @@ Route::resource('favorite', UserHasFavoriteController::class)->only(['show', 'st
 ]);
 Route::delete('/favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
 
-// TODO code the routes to get all the ads of a user and all the ads for a course
 Route::resource('user.advertisement', AdvertisementController::class)->only(['index']);
 Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy']);
 Route::resource('course.advertisement', CourseAdvertisementController::class)->only(['index']);
+
+Route::resource('user.social_links', SocialLinksController::class)->only(['index']);
+Route::resource('social_links', SocialLinksController::class)->only(['store', 'update'])->parameters([
+    'social_links' => 'user_email'
+]);
 
 
 // Route::get('/user/{email}', function($email){
