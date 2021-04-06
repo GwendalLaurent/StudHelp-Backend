@@ -26,6 +26,5 @@
 | GET|HEAD  | api/user/{email}                  | Get a specific user                                        |
 | GET|HEAD  | api/user/{user}/advertisement     | Get all the advertisement of a specific user               |
 | GET|HEAD  | api/user/{user}/social_links      | Get the social links of a specific user                    |
-|-----------|-----------------------------------|------------------------------------------------------------|
 ## License
 The backend of StudHelp uses the Laravel framework. The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
