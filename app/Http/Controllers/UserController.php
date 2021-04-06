@@ -9,6 +9,31 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+
+    public function updateLoginAndName($user_email, Request $request)
+    {
+        $user = User::where('email', $user_email);
+        if($request->has('login')){
+            $user->update(['login' => $request->input('login')]);
+        }
+        if($request->has('name')){
+            $user->update(['name' => $request->input('name')]);
+        }
+        return $user->get();
+    }
+
+    public function updatePassword($user_email, Request $request)
+    {
+        $user = User::where('email', $user_email);
+        if(Hash::check($request->input('oldpassword'),$user->get('password')[0]['password'])){
+            $user->update(['password' => Hash::make($request->input('password'))]);
+            return $user->get();
+        }else{
+            echo "error";
+            return;
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -44,7 +69,7 @@ class UserController extends Controller
         }
         else{
             $request->merge([
-                'password' => Hash::make($request->input('password'))
+                'password' => bcrypt($request->input('password'))
             ]); // hasing the password
             return User::create($request->all());
         }

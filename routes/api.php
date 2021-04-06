@@ -31,13 +31,15 @@ use App\Http\Controllers\SocialLinksController;
 Route::resource('user', UserController::class)->only(['index', 'store', 'show'])->parameters([
     'user' => 'email', // setting the email as the parameter for user
 ]);
+Route::put('user/{email}', [UserController::class, 'updateLoginAndName']);
+route::put('user/password/{email}', [UserController::class, 'updatePassword']);
 
 Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
 
 Route::resource('favorite', UserHasFavoriteController::class)->only(['show', 'store'])->parameters([
     'favorite' => 'user_email',
 ]);
-Route::delete('/favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
+Route::delete('favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
 
 Route::resource('user.advertisement', AdvertisementController::class)->only(['index']);
 Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy']);
