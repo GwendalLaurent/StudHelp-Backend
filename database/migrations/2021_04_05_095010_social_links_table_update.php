@@ -20,7 +20,7 @@ class SocialLinksTableUpdate extends Migration
         }
         
         Schema::table('social_links', function (Blueprint $table) {
-            $table->foreign('user_email')->reference('email')->on('users')->onDelete('cascade');
+            // $table->foreign('user_email')->reference('email')->on('users')->onDelete('cascade');
             $table->char('discord', 100)->nullable()->change(); 
             $table->char('teams', 100)->nullable()->change();
             $table->char('facebook', 100)->nullable()->change();
@@ -40,7 +40,7 @@ class SocialLinksTableUpdate extends Migration
         }
 
         Schema::table('social_links', function (Blueprint $table) {
-            $table->dropForeign(['user_email']);
+            // $table->dropForeign(['user_email']);
             $table->char('discord', 100)->nullable()->change(); 
             $table->char('teams', 100)->nullable()->change();
             $table->char('facebook', 100)->nullable()->change();
