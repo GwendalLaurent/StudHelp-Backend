@@ -13,7 +13,7 @@ class PrimaryKeyUserHasFavorite extends Migration
      */
     public function up()
     {
-        Schema::table('user_has_favorite', function (Blueprint $table) {
+        Schema::table('user_has_favorites', function (Blueprint $table) {
             $table->primary(['user_email', 'course_id']);
             $table->foreign('user_email')->references('email')->on('users')->OnDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->OnDelete('cascade');
