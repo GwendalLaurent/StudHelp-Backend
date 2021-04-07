@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\UserHasFavorite;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserHasFavoriteController;
@@ -27,34 +28,37 @@ use App\Http\Controllers\SocialLinksController;
 
 // To show all the routes use 'php artisan route:list'
 
+//Public routes
 
-Route::resource('user', UserController::class)->only(['index', 'store', 'show'])->parameters([
-    'user' => 'email', // setting the email as the parameter for user
-]);
-Route::put('user/{email}', [UserController::class, 'updateLoginAndName']);
-route::put('user/password/{email}', [UserController::class, 'updatePassword']);
-
-Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
-
-Route::resource('favorite', UserHasFavoriteController::class)->only(['show', 'store'])->parameters([
-    'favorite' => 'user_email',
-]);
-Route::delete('favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
-
-Route::resource('user.advertisement', AdvertisementController::class)->only(['index']);
-Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy']);
-Route::resource('course.advertisement', CourseAdvertisementController::class)->only(['index']);
-
-Route::resource('user.social_links', SocialLinksController::class)->only(['index']);
-Route::resource('social_links', SocialLinksController::class)->only(['store', 'update'])->parameters([
-    'social_links' => 'user_email'
-]);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
 
 
-// Route::get('/user/{email}', function($email){
-//     User::where('email', $email);
-// });
+//Protected routes, authentification required
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    //Logout
+    Route::post('logout', [AuthController::class, 'logout']);
 
-// Route::middleware('auth:api')->get('/auth/user', function (Request $request) {
-//     return $request->user();
-// });
+    
+    Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
+    
+    Route::resource('user', UserController::class)->only(['index', 'store', 'show'])->parameters([
+        'user' => 'email', // setting the email as the parameter for user
+    ]);
+    Route::put('user/{email}', [UserController::class, 'updateLoginAndName']);
+    route::put('user/password/{email}', [UserController::class, 'updatePassword']);
+    
+    Route::resource('favorite', UserHasFavoriteController::class)->only(['show', 'store'])->parameters([
+        'favorite' => 'user_email',
+    ]);
+    Route::delete('favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
+    
+    Route::resource('user.advertisement', AdvertisementController::class)->only(['index']);
+    Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('course.advertisement', CourseAdvertisementController::class)->only(['index']);
+    
+    Route::resource('user.social_links', SocialLinksController::class)->only(['index']);
+    Route::resource('social_links', SocialLinksController::class)->only(['store', 'update'])->parameters([
+        'social_links' => 'user_email'
+    ]);
+});

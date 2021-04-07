@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Model
 {
-    public $timestamps = false; // removing the timestamps
+    use HasFactory, HasApiTokens;
 
-    use HasFactory;
+    public $timestamps = false; // removing the timestamps
+    
     protected $fillable = [
         'login', 
         'name',

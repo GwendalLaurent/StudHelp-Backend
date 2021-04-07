@@ -16,5 +16,7 @@ class Course extends Model
         'code',
         'university',
         'name',
+        'fac',
+        'quadri'
     ];
 }
