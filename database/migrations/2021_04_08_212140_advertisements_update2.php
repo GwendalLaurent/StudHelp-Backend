@@ -14,7 +14,7 @@ class AdvertisementsUpdate2 extends Migration
     public function up()
     {
         Schema::table('advertisements', function (Blueprint $table) {
-            $table->removeColumn('descrition');
+            $table->dropColumn('descrition');
         });
     }
 
