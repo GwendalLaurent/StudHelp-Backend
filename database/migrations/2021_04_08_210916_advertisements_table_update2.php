@@ -13,7 +13,7 @@ class SocialLinksTableUpdate2 extends Migration
      */
     public function up()
     {
-        Schema::table('social_links', function (Blueprint $table) {
+        Schema::table('advertisements', function (Blueprint $table) {
             $table->removeColumn('descrition');
         });
     }
@@ -25,7 +25,7 @@ class SocialLinksTableUpdate2 extends Migration
      */
     public function down()
     {
-        Schema::table('social_links', function (Blueprint $table) {
+        Schema::table('advertisements', function (Blueprint $table) {
             $table->text('descrition')->nullable(false)->default('Pas de description');
         });
     }
