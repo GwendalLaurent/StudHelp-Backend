@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\SocialLink;
 
 class AuthController extends Controller
 {
@@ -23,6 +24,10 @@ class AuthController extends Controller
             'email' => $fields['email'],
             'name' => $fields['name'],
             'password' => bcrypt($fields['password'])
+        ]);
+
+        $social_links = SocialLink::create([
+            'user_email' => $fields['email']
         ]);
 
         $token = $user->createToken('StudHelp')->plainTextToken;
