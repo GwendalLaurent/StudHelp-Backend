@@ -26,7 +26,7 @@ class AdvertisementsUpdate2 extends Migration
     public function down()
     {
         Schema::table('advertisements', function (Blueprint $table) {
-            $table->text('descrition')->nullable(false)->default('Pas de description');
+            // $table->text('descrition')->nullable(false)->default('Pas de description');
         });
     }
 }
