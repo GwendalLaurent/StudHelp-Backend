@@ -94,15 +94,14 @@ class UserController extends Controller
             $response = [
                 'user' => $user
             ];
-            $code = 201;
+            return response($response, 201);
         }else{
             $response = [
                 'message' => 'The given data was invalid',
                 'errors' => ['password' => ['Wrong password']]
             ];
-            $code = 422;
+            return response($response, 422);
         }
-        return response($response, $code);
     }
     /**
      * Remove the specified resource from storage.
