@@ -97,7 +97,8 @@ class UserController extends Controller
             $code = 201;
         }else{
             $response = [
-                'error' => 'Wrong password'
+                'message' => 'The given data was invalid',
+                'errors' => ['password' => ['Wrong password']]
             ];
             $code = 422;
         }
