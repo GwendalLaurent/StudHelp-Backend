@@ -60,26 +60,48 @@ class UserController extends Controller
     
     public function updateLoginAndName($user_email, Request $request)
     {
-        $user = User::where('email', $user_email);
+        $fields = $request->validate([
+            'login' => 'string|unique:users,login',
+            'name' => 'string'
+        ]);
+
+        $user = User::where('email', $user_email)->first();
+
         if($request->has('login')){
             $user->update(['login' => $request->input('login')]);
         }
         if($request->has('name')){
             $user->update(['name' => $request->input('name')]);
         }
-        return $user->get();
+
+        $response = [
+            'user' => $user
+        ];
+
+        return response($response, 201);
     }
 
     public function updatePassword($user_email, Request $request)
     {
-        $user = User::where('email', $user_email);
+        $fields = $request->validate([
+            'password' => 'required|string|confirmed'
+        ]);
+
+        $user = User::where('email', $user_email)->first();
+
         if(Hash::check($request->input('oldpassword'),$user->get('password')[0]['password'])){
-            $user->update(['password' => Hash::make($request->input('password'))]);
-            return $user->get();
+            $user->update(['password' => bcrypt($fields['password'])]);
+            $response = [
+                'user' => $user
+            ];
+            $code = 201;
         }else{
-            echo "error";
-            return;
+            $response = [
+                'error' => 'Wrong password'
+            ];
+            $code = 422;
         }
+        return response($response, $code);
     }
     /**
      * Remove the specified resource from storage.
