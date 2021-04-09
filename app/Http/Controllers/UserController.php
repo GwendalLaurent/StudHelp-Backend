@@ -88,9 +88,8 @@ class UserController extends Controller
         ]);
 
         $user = User::where('email', $user_email)->first();
-        echo $user;
 
-        if(Hash::check($request->input('old_password'),$user->get('password')[0]['password'])){
+        if(Hash::check($request->input('old_password'),$user['password'])){
             $user->update(['password' => bcrypt($fields['password'])]);
             $response = [
                 'user' => $user
