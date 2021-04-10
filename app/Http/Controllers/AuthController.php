@@ -27,7 +27,10 @@ class AuthController extends Controller
         ]);
 
         $social_links = SocialLink::create([
-            'user_email' => $fields['email']
+            'user_email' => $fields['email'],
+            'discord' => "",
+            'teams' => "",
+            'facebook' => ""
         ]);
 
         $token = $user->createToken('StudHelp')->plainTextToken;
