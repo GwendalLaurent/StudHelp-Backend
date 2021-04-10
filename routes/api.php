@@ -42,10 +42,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
     
+    Route::put('user/{email}', [UserController::class, 'updateLoginAndName']);
     Route::resource('user', UserController::class)->only(['index', 'store', 'show'])->parameters([
         'user' => 'email', // setting the email as the parameter for user
     ]);
-    Route::put('user/{email}', [UserController::class, 'updateLoginAndName']);
     route::put('user/password/{email}', [UserController::class, 'updatePassword']);
     
     Route::resource('favorite', UserHasFavoriteController::class)->only(['show', 'store'])->parameters([
