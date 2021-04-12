@@ -10,6 +10,17 @@ use App\Models\User;
 class UserController extends Controller
 {
 
+    public function updateFirebaseToken($user_email, Request $request)
+    {
+        $fields = $request->validate([
+            'firebase_token' => 'required|string',
+        ]);
+
+
+        $user = User::where('email', $user_email)->first();
+        $user->update(['firebase_token' => $request->input('firebase_token')]);
+        return $user->makeHidden(['firebase_token']);
+    }
 
 
     /**

@@ -17,5 +17,6 @@ class User extends Model
         'name',
         'password',
         'email',
+        'firebase_token',
     ];
 }
