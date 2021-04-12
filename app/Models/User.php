@@ -15,10 +15,13 @@ class User extends Model
     protected $fillable = [
         'login', 
         'name',
-        'password',
         'email',
-        'firebase_token',
         'picture',
         'description'
+    ];
+
+    protected $hidden = [
+        'password',
+        'firebase_token',
     ];
 }

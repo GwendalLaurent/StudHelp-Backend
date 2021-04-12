@@ -16,7 +16,6 @@ class UserController extends Controller
             'firebase_token' => 'required|string',
         ]);
 
-
         $user = User::where('email', $user_email)->first();
         $user->update(['firebase_token' => $request->input('firebase_token')]);
         return $user->makeHidden(['firebase_token']);
@@ -43,7 +42,7 @@ class UserController extends Controller
     public function show($email)
     {
         // Show a single user
-        return User::where('email', $email)->get()->makeHidden(['firebase_token']);
+        return User::where('email', $email)->get();
     }
 
     /**
@@ -86,7 +85,7 @@ class UserController extends Controller
         }
 
         $response = [
-            'user' => $user->makeHidden(['firebase_token'])
+            'user' => $user
         ];
 
         return response($response, 201);
@@ -103,7 +102,7 @@ class UserController extends Controller
         if(Hash::check($request->input('old_password'),$user['password'])){
             $user->update(['password' => bcrypt($fields['password'])]);
             $response = [
-                'user' => $user->makeHidden(['firebase_token'])
+                'user' => $user
             ];
             return response($response, 201);
         }else{

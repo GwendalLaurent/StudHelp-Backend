@@ -33,7 +33,7 @@ class AuthController extends Controller
         $token = $user->createToken('StudHelp')->plainTextToken;
 
         $response = [
-            'user' => $user->makeHidden['firebase_token'],
+            'user' => $user,
             'token' => $token
         ];
 
@@ -56,7 +56,7 @@ class AuthController extends Controller
         $token = $user->createToken('StudHelp')->plainTextToken;
 
         $response = [
-            'user' => $user->makeHidden(['firebase_token']),
+            'user' => $user,
             'token' => $token
         ];
 

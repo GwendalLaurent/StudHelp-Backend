@@ -13,7 +13,7 @@ use App\Http\Controllers\UserHasFavoriteController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\CourseAdvertisementController;
 use App\Http\Controllers\SocialLinksController;
-use App\Http\Controllers\UploadController;
+use App\Http\Controllers\PicturesController;
 
 
 /*
@@ -64,5 +64,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         'social_links' => 'user_email'
     ]);
 
-    Route::post('user/upload', [UploadController::class, 'uploadProfilePicture']);
+    Route::post('user/upload', [PicturesController::class, 'uploadProfilePicture']);
+
+    Route::post('advertisement/upload', [PicturesController::class, 'uploadAdvertisementPictures']);
 });
