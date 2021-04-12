@@ -68,14 +68,14 @@ class UserController extends Controller
         $user = User::where('email', $user_email)->first();
 
         if($request->has('login')){
-            $user->update(['login' => $request->input('login')]);
+            $user->update(['login' => $fields['login']]);
         }
         if($request->has('name')){
-            $user->update(['name' => $request->input('name')]);
+            $user->update(['name' => $fields['name']]);
         }
 
         $response = [
-            'user' => $user
+            'user' => $user,
         ];
 
         return response($response, 201);
