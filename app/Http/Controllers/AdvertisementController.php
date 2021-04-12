@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
+use App\Jobs\SendPushNotification;
 
 use Illuminate\Http\Request;
 
@@ -36,7 +37,10 @@ class AdvertisementController extends Controller
      */
     public function store(Request $request)
     {
-        return Advertisement::create($request->all());
+        $ad = Advertisement::create($request->all());
+        $this->dispatch(new SendPushNotification($ad));
+
+        return $ad;
     }
 
     /**
