@@ -16,6 +16,7 @@ class SocialLink extends Model
         'user_email',
         'discord',
         'teams',
-        'facebook',
+        'phone',
+        'email',
     ];
 }
