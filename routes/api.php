@@ -13,6 +13,7 @@ use App\Http\Controllers\UserHasFavoriteController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\CourseAdvertisementController;
 use App\Http\Controllers\SocialLinksController;
+use App\Http\Controllers\UploadController;
 
 
 /*
@@ -62,4 +63,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('social_links', SocialLinksController::class)->only(['store', 'update'])->parameters([
         'social_links' => 'user_email'
     ]);
+
+    Route::post('user/upload', [UploadController::class, 'uploadProfilePicture']);
 });
