@@ -14,6 +14,7 @@ use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\CourseAdvertisementController;
 use App\Http\Controllers\SocialLinksController;
 use App\Http\Controllers\PicturesController;
+use App\Http\Controllers\AdvertisementHasPicturesController;
 use App\Http\Controllers\AdvertisementHasTagsController;
 
 
@@ -67,7 +68,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('user/upload', [PicturesController::class, 'uploadProfilePicture']);
 
-    Route::post('advertisement/upload', [PicturesController::class, 'uploadAdvertisementPictures']);
-
+    Route::resource('advertisement/pictures', AdvertisementHasPicturesController::class)->only(['show','store']);
     Route::resource('advertisement/tags', AdvertisementHasTagsController::class)->only(['show','store', 'update', 'destroy']);
 });
