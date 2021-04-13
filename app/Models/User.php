@@ -18,7 +18,8 @@ class User extends Model
         'email',
         'picture',
         'description',
-        'firebase_token'
+        'firebase_token',
+        'password' 
     ];
 
     protected $hidden = [
