@@ -56,11 +56,11 @@ class SendPushNotification implements ShouldQueue
         }, $users);
 
         $server_key = env("FIREBASE_KEY");
-        echo $server_key;
         $headers = [
             'Authorization: key=' . $server_key,
             'Content-Type: application/json',
         ];
+        if(empty($tokens)) return;
         $data = [
             "registration_ids" => $tokens,
             "notification" => [
