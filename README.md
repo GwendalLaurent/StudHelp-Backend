@@ -24,7 +24,7 @@
 | POST      | user                          | Add a new user                                             |
 | GET HEAD  | user                          | Get all the users                                          |
 | PUT       | user/password/{email}         | Update the password of a specific user                     |
-| PUT       | user/{email}                  | Update the name or/and the email of a specific user        |
+| PUT       | user/profile/{email}                  | Update the name or/and the email of a specific user        |
 | GET HEAD  | user/{email}                  | Get a specific user                                        |
 | GET HEAD  | user/{user}/advertisement     | Get all the advertisement of a specific user               |
 | GET HEAD  | user/{user}/social_links      | Get the social links of a specific user                    |
