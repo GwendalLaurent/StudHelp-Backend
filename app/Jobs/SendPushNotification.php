@@ -60,6 +60,7 @@ class SendPushNotification implements ShouldQueue
             'Authorization: key=' . $server_key,
             'Content-Type: application/json',
         ];
+        if(empty($tokens)) return;
         $data = [
             "registration_ids" => $tokens,
             "notification" => [
@@ -78,6 +79,6 @@ class SendPushNotification implements ShouldQueue
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
             
         $response = curl_exec($ch);
-        //dd($response);
+        dd($response);
     }
 }
