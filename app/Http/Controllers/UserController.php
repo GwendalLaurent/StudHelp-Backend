@@ -68,11 +68,12 @@ class UserController extends Controller
         //
     }
     
-    public function updateLoginAndName($user_email, Request $request)
+    public function updateLoginAndNameAndDescription($user_email, Request $request)
     {
         $fields = $request->validate([
             'login' => 'string|unique:users,login',
-            'name' => 'string'
+            'name' => 'string',
+            'description' => 'string'
         ]);
 
         $user = User::where('email', $user_email)->first();
@@ -82,6 +83,9 @@ class UserController extends Controller
         }
         if($request->has('name')){
             $user->update(['name' => $fields['name']]);
+        }
+        if($request->has('description')){
+            $user->update(['description' => $fields['description']]);
         }
 
         $response = [
