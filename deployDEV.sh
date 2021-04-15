@@ -20,7 +20,7 @@ php artisan down || true
 
     # Clear cache
     php artisan optimize
-
+    php artisan config:clear
     # Reload PHP to update opcache
     #echo "" | sudo -S service php7.4-fpm reload
 # Exit maintenance mode
