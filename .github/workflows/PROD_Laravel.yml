@@ -1,7 +1,7 @@
 name: Deploy API To Production
 
 on:
-  pull_request:
+  pull_request_review:
     branches: [production]
 
 jobs:
