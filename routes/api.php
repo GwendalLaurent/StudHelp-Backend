@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
     
     Route::resource('user.advertisement', AdvertisementController::class)->only(['index']);
-    Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy', 'show']);
     Route::resource('course.advertisement', CourseAdvertisementController::class)->only(['index']);
     
     Route::resource('user.social_links', SocialLinksController::class)->only(['index']);

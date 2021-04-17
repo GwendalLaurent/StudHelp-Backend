@@ -51,7 +51,7 @@ class AdvertisementController extends Controller
      */
     public function show($id)
     {
-        // Not needed right now ?
+        return Advertisement::where('id', $id)->get();
     }
 
     /**
