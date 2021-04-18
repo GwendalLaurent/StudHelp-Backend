@@ -17,7 +17,7 @@ use App\Http\Controllers\AdvertisementHasPicturesController;
 use App\Http\Controllers\AdvertisementHasTagsController;
 use App\Http\Controllers\GlobalVariablesController;
 use App\Http\Controllers\BookmarksController;
-
+use App\Http\Controllers\CourseHasFilesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +45,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     
     Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
-    
+    Route::resource('course/file', CourseHasFilesController::class)->only(['show','store','destroy']);
+
     Route::put('user/profile/{email}', [UserController::class, 'updateLoginAndNameAndDescription']);
     Route::put('firebase_token/{user_email}', [UserController::class, 'updateFirebaseToken']);
     Route::resource('user', UserController::class)->only(['index', 'store', 'show'])->parameters([
