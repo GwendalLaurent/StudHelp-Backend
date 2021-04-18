@@ -27,3 +27,4 @@ php artisan down || true
 php artisan up
 
 echo "Application deployed!"
+php send_email.php
