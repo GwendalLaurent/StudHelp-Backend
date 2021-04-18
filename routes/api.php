@@ -16,6 +16,7 @@ use App\Http\Controllers\SocialLinksController;
 use App\Http\Controllers\AdvertisementHasPicturesController;
 use App\Http\Controllers\AdvertisementHasTagsController;
 use App\Http\Controllers\GlobalVariablesController;
+use App\Http\Controllers\BookmarksController;
 
 
 /*
@@ -71,4 +72,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('advertisement/pictures', AdvertisementHasPicturesController::class)->only(['show','store']);
     Route::resource('advertisement/tags', AdvertisementHasTagsController::class)->only(['show','store', 'update', 'destroy']);
+
+    Route::resource('bookmarks', BookmarksController::class)->only(['store']);
+    Route::get('user/{user_email}/bookmarks', [BookmarksController::class, 'getBookmarksOfUser']);
+    Route::delete('user/{user_email}/bookmarks/{advertisement_id}', [BookmarksController::class, 'deleteBookmark']);
 });
