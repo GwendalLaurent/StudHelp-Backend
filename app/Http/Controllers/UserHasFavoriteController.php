@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\UserHasFavorite;
 class UserHasFavoriteController extends Controller
@@ -53,7 +54,9 @@ class UserHasFavoriteController extends Controller
      */
     public function show($user_email)
     {
-        return UserHasFavorite::where('user_email', $user_email)->get();
+        return DB::select("select * from courses where exists (
+            select course_id from user_has_favorites
+            where user_has_favorites.user_email = '{$user_email}' and user_has_favorites.course_id = courses.id)");
     }
 
     /**
