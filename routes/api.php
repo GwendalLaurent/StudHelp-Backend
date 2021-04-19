@@ -12,6 +12,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserHasFavoriteController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\CourseAdvertisementController;
+use App\Http\Controllers\CourseFilesController;
 use App\Http\Controllers\SocialLinksController;
 use App\Http\Controllers\AdvertisementHasPicturesController;
 use App\Http\Controllers\AdvertisementHasTagsController;
@@ -62,7 +63,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('user.advertisement', AdvertisementController::class)->only(['index']);
     Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy', 'show']);
     Route::resource('course.advertisement', CourseAdvertisementController::class)->only(['index']);
-    
+    Route::resource('course.files', CourseFilesController::class)->only(['index']);
+
     Route::resource('user.social_links', SocialLinksController::class)->only(['index']);
     Route::resource('globalvariables', GlobalVariablesController::class)->only(['show']);
     Route::resource('social_links', SocialLinksController::class)->only(['store', 'update'])->parameters([
