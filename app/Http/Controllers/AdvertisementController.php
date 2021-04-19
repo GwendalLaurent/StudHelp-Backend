@@ -16,7 +16,7 @@ class AdvertisementController extends Controller
      */
     public function index($user_email)
     {
-        return Advertisement::where('user_email', $user_email)->join('users', 'users.email', '=', $user_email)->select('advertisements.*', 'users.name')->get();
+        return Advertisement::where('user_email', $user_email)->join('users', 'users.email', '=', 'user_email')->select('advertisements.*', 'users.name')->get();
     }
 
     /**
