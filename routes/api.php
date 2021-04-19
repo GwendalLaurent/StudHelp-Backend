@@ -39,7 +39,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 
 //Protected routes, authentification required
-Route::group(['middleware' => ['auth:sanctum', 'throttle:300,1']], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
     //Logout
     Route::post('logout', [AuthController::class, 'logout']);
 
