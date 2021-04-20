@@ -63,10 +63,10 @@ class SendPushNotification implements ShouldQueue
         if(empty($tokens)) return;
         $data = [
             "registration_ids" => $tokens,
-            "notification" => [
+            "data" => [
             "title" => "Nouvelle annonce!",
             "body" => "Un utilisateur à posté une nouvelle annonce dans {$course_code}",  
-            "click_action" => $this->advertisement["id"],
+            "notification_id" => $this->advertisement["id"],
             ],
         ];
         $dataString = json_encode($data);

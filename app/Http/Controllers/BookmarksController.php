@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-use App\Models\UserHasFavorite;
-class UserHasFavoriteController extends Controller
+use App\Models\UserHasBookmarks;
+use Illuminate\Support\Facades\DB;
+class BookmarksController extends Controller
 {
 
-
-    public function deleteFavForUser(Request $request)
+    public function getBookmarksOfUser($user_email)
     {
-        return UserHasFavorite::where('user_email', $request->input('user_email'))->where('course_id', $request->input('course_id'))->delete();
+        return DB::select("select advertisements.*, users.name from advertisements 
+                           inner join users on advertisements.user_email = users.email
+                           where exists (
+                           select advertisement_id from user_has_bookmarks
+                           where user_has_bookmarks.user_email = '{$user_email}' and user_has_bookmarks.advertisement_id = advertisements.id)");
+    }
+
+    public function deleteBookmark($user_email, $advertisement_id)
+    {
+        return UserHasBookmarks::where('user_email', $user_email)->where('advertisement_id', $advertisement_id)->delete();    
     }
 
     /**
@@ -43,20 +51,26 @@ class UserHasFavoriteController extends Controller
      */
     public function store(Request $request)
     {
-        return UserHasFavorite::create($request->all());
+        $fields = $request->validate([
+            'user_email' => 'required|string',
+            'advertisement_id' => 'required'
+        ]);
+
+        return UserHasBookmarks::create([
+                'user_email' => $fields['user_email'],
+                'advertisement_id' => $fields['advertisement_id']
+                ]);
     }
 
     /**
-     * Returns the list of favorite courses of the given user
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_email)
+    public function show($id)
     {
-        return DB::select("select * from courses where exists (
-            select course_id from user_has_favorites
-            where user_has_favorites.user_email = '{$user_email}' and user_has_favorites.course_id = courses.id)");
+        //
     }
 
     /**

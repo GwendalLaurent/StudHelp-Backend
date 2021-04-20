@@ -3,26 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-use App\Models\UserHasFavorite;
-class UserHasFavoriteController extends Controller
+use App\Models\CourseHasFiles;
+class CourseFilesController extends Controller
 {
-
-
-    public function deleteFavForUser(Request $request)
-    {
-        return UserHasFavorite::where('user_email', $request->input('user_email'))->where('course_id', $request->input('course_id'))->delete();
-    }
-
-    /**
+       /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($course_id)
     {
-        //
+        return CourseHasFiles::where('course_id', $course_id)->get();   
     }
 
     /**
@@ -43,20 +35,18 @@ class UserHasFavoriteController extends Controller
      */
     public function store(Request $request)
     {
-        return UserHasFavorite::create($request->all());
+        //
     }
 
     /**
-     * Returns the list of favorite courses of the given user
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_email)
+    public function show($id)
     {
-        return DB::select("select * from courses where exists (
-            select course_id from user_has_favorites
-            where user_has_favorites.user_email = '{$user_email}' and user_has_favorites.course_id = courses.id)");
+        //
     }
 
     /**

@@ -12,11 +12,13 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserHasFavoriteController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\CourseAdvertisementController;
+use App\Http\Controllers\CourseFilesController;
 use App\Http\Controllers\SocialLinksController;
 use App\Http\Controllers\AdvertisementHasPicturesController;
 use App\Http\Controllers\AdvertisementHasTagsController;
 use App\Http\Controllers\GlobalVariablesController;
-
+use App\Http\Controllers\BookmarksController;
+use App\Http\Controllers\CourseHasFilesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +46,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     
     Route::resource('course', CourseController::class)->only(['index', 'store', 'show']);
-    
+    Route::resource('course/file', CourseHasFilesController::class)->only(['show','store','destroy']);
+
     Route::put('user/profile/{email}', [UserController::class, 'updateLoginAndNameAndDescription']);
     Route::put('firebase_token/{user_email}', [UserController::class, 'updateFirebaseToken']);
     Route::resource('user', UserController::class)->only(['index', 'store', 'show'])->parameters([
@@ -58,9 +61,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('favorite', [UserHasFavoriteController::class, 'deleteFavForUser']);
     
     Route::resource('user.advertisement', AdvertisementController::class)->only(['index']);
-    Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('advertisement', AdvertisementController::class)->only(['store', 'update', 'destroy', 'show']);
     Route::resource('course.advertisement', CourseAdvertisementController::class)->only(['index']);
-    
+    Route::resource('course.files', CourseFilesController::class)->only(['index']);
+
     Route::resource('user.social_links', SocialLinksController::class)->only(['index']);
     Route::resource('globalvariables', GlobalVariablesController::class)->only(['show']);
     Route::resource('social_links', SocialLinksController::class)->only(['store', 'update'])->parameters([
@@ -71,4 +75,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('advertisement/pictures', AdvertisementHasPicturesController::class)->only(['show','store']);
     Route::resource('advertisement/tags', AdvertisementHasTagsController::class)->only(['show','store', 'update', 'destroy']);
+
+    Route::resource('bookmarks', BookmarksController::class)->only(['store']);
+    Route::get('user/{user_email}/bookmarks', [BookmarksController::class, 'getBookmarksOfUser']);
+    Route::delete('user/{user_email}/bookmarks/{advertisement_id}', [BookmarksController::class, 'deleteBookmark']);
 });
