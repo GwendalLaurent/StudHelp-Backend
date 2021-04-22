@@ -16,7 +16,7 @@ class BookmarksController extends Controller
         $result = [];
         if ($bookmarks != NULL){
             foreach ($bookmarks as $i){
-                $result[] = Advertisement::where('id', $i->advertisement_id)->first();
+                $result[] = Advertisement::where('advertisements.id', $i->advertisement_id)->join('users', 'users.email', '=', 'user_email')->select('advertisements.*', 'users.name')->first();
             }
         }
         return $result;
