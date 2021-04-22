@@ -19,7 +19,7 @@ class BookmarksController extends Controller
                 $result->add(Advertisement::where('advertisements.id', $i->advertisement_id)->join('users', 'users.email', '=', 'user_email')->select('advertisements.*', 'users.name')->first());
             }
         }
-        return $result->sortBy('created_at')->values();
+        return $result->sortByDesc('created_at')->values();
     }
 
     public function deleteBookmark($user_email, $advertisement_id)
