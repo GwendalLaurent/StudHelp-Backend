@@ -5,17 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\UserHasBookmarks;
+use App\Models\Advertisement;
 use Illuminate\Support\Facades\DB;
 class BookmarksController extends Controller
 {
 
     public function getBookmarksOfUser($user_email)
     {
-        return DB::select("select advertisements.*, users.name from advertisements 
-                           inner join users on advertisements.user_email = users.email
-                           where exists (
-                           select advertisement_id from user_has_bookmarks
-                           where user_has_bookmarks.user_email = '{$user_email}' and user_has_bookmarks.advertisement_id = advertisements.id)");
+        $bookmarks = UserHasBookmarks::where('user_email', $user_email)->get();
+        $result = [];
+        if ($bookmarks != NULL){
+            foreach ($bookmarks as $i){
+                $result[] = Advertisement::where('id', $i->advertisement_id)->first();
+            }
+        }
+        return $result;
     }
 
     public function deleteBookmark($user_email, $advertisement_id)
