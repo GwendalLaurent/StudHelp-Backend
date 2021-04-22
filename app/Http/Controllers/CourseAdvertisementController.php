@@ -15,7 +15,7 @@ class CourseAdvertisementController extends Controller
      */
     public function index($course_id)
     {
-        return Advertisement::where('course_id', $course_id)->join('users', 'users.email', '=', 'advertisements.user_email')->select('advertisements.*', 'users.name')->get();   
+        return Advertisement::where('course_id', $course_id)->join('users', 'users.email', '=', 'advertisements.user_email')->select('advertisements.*', 'users.name')->latest()->get();   
     }
 
     /**

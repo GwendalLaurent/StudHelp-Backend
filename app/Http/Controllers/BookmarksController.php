@@ -13,13 +13,13 @@ class BookmarksController extends Controller
     public function getBookmarksOfUser($user_email)
     {
         $bookmarks = UserHasBookmarks::where('user_email', $user_email)->get();
-        $result = [];
+        $result = new \Illuminate\Database\Eloquent\Collection();
         if ($bookmarks != NULL){
             foreach ($bookmarks as $i){
-                $result[] = Advertisement::where('advertisements.id', $i->advertisement_id)->join('users', 'users.email', '=', 'user_email')->select('advertisements.*', 'users.name')->first();
+                $result->add(Advertisement::where('advertisements.id', $i->advertisement_id)->join('users', 'users.email', '=', 'user_email')->select('advertisements.*', 'users.name')->first());
             }
         }
-        return $result;
+        return $result->sortBy('created_at')->values();
     }
 
     public function deleteBookmark($user_email, $advertisement_id)
