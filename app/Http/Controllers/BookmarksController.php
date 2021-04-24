@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\UserHasBookmarks;
+use App\Models\AdvertisementHasTags;
 use App\Models\Advertisement;
 use Illuminate\Support\Facades\DB;
 class BookmarksController extends Controller
@@ -16,7 +17,14 @@ class BookmarksController extends Controller
         $result = new \Illuminate\Database\Eloquent\Collection();
         if ($bookmarks != NULL){
             foreach ($bookmarks as $i){
-                $result->add(Advertisement::where('advertisements.id', $i->advertisement_id)->join('users', 'users.email', '=', 'user_email')->select('advertisements.*', 'users.name')->first());
+                $ad = Advertisement::where('advertisements.id', $i->advertisement_id)
+                ->join('users', 'users.email', '=', 'user_email')
+                ->leftjoin('advertisement_has_pictures', 'advertisement_has_pictures.advertisement_id', '=', 'advertisements.id')
+                ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture')->first();
+
+                $ad["tags"] = AdvertisementHasTags::where('advertisement_id', $ad['id'])->get();
+
+                $result->add($ad);
             }
         }
         return $result->sortByDesc('created_at')->values();
