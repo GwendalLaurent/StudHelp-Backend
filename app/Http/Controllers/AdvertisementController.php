@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
 use App\Models\AdvertisementHasTags;
+use App\Models\UserHasBookmarks;
 use App\Jobs\SendPushNotification;
 
 use Illuminate\Http\Request;
@@ -106,6 +107,7 @@ class AdvertisementController extends Controller
      */
     public function destroy($id)
     {
+        UserHasBookmarks::where("advertisement_id", $id)->delete();
         return Advertisement::destroy($id);
     }
 }
