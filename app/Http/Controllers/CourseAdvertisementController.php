@@ -22,7 +22,7 @@ class CourseAdvertisementController extends Controller
         ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture')->latest()->get();   
 
         $ads->map(function($item){
-            $item["tag"] = AdvertisementHasTags::where('advertisement_id', $item['id'])->get();
+            $item["tags"] = AdvertisementHasTags::where('advertisement_id', $item['id'])->get();
         });
 
         return $ads;
