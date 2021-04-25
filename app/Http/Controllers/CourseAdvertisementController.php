@@ -18,8 +18,9 @@ class CourseAdvertisementController extends Controller
     {
         $ads = Advertisement::where('course_id', $course_id)
         ->join('users', 'users.email', '=', 'advertisements.user_email')
+        ->join('courses', 'courses.id', '=', 'course_id')
         ->leftjoin('advertisement_has_pictures', 'advertisement_has_pictures.advertisement_id', '=', 'advertisements.id')
-        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture')->latest()->get();   
+        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture', 'courses.name as course_name')->latest()->get();   
 
         $ads->map(function($item){
             $item["tags"] = AdvertisementHasTags::where('advertisement_id', $item['id'])->get();

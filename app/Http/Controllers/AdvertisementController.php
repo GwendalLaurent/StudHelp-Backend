@@ -20,8 +20,9 @@ class AdvertisementController extends Controller
     {
         $ads = Advertisement::where('user_email', $user_email)
         ->join('users', 'users.email', '=', 'user_email')
+        ->join('courses', 'courses.id', '=', 'course_id')
         ->leftjoin('advertisement_has_pictures', 'advertisement_has_pictures.advertisement_id', '=', 'advertisements.id')
-        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture')->latest()->get();
+        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture', 'courses.name as course_name')->latest()->get();
 
         $ads->map(function($item){
             $item["tags"] = AdvertisementHasTags::where('advertisement_id', $item['id'])->get();
@@ -64,8 +65,9 @@ class AdvertisementController extends Controller
     {
         $ads = Advertisement::where('advertisements.id', $id)
         ->join('users', 'users.email', '=', 'advertisements.user_email')
+        ->join('courses', 'courses.id', '=', 'course_id')
         ->leftjoin('advertisement_has_pictures', 'advertisement_has_pictures.advertisement_id', '=', 'advertisements.id')
-        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture')->latest()->get();
+        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture', 'courses.name as course_name')->latest()->get();
 
         $ads->map(function($ad){
             $ad["tags"] = AdvertisementHasTags::where('advertisement_id', $ad["id"])->get();
