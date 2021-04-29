@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
+use App\Models\AdvertisementHasTags;
 
 use Illuminate\Http\Request;
 
@@ -15,7 +16,17 @@ class CourseAdvertisementController extends Controller
      */
     public function index($course_id)
     {
-        return Advertisement::where('course_id', $course_id)->join('users', 'users.email', '=', 'advertisements.user_email')->select('advertisements.*', 'users.name')->get();   
+        $ads = Advertisement::where('course_id', $course_id)
+        ->join('users', 'users.email', '=', 'advertisements.user_email')
+        ->join('courses', 'courses.id', '=', 'course_id')
+        ->leftjoin('advertisement_has_pictures', 'advertisement_has_pictures.advertisement_id', '=', 'advertisements.id')
+        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture', 'courses.name as course_name')->latest()->get();   
+
+        $ads->map(function($item){
+            $item["tags"] = AdvertisementHasTags::where('advertisement_id', $item['id'])->get();
+        });
+
+        return $ads;
     }
 
     /**

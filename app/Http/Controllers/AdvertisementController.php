@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
+use App\Models\AdvertisementHasTags;
+use App\Models\UserHasBookmarks;
 use App\Jobs\SendPushNotification;
 
 use Illuminate\Http\Request;
@@ -16,7 +18,17 @@ class AdvertisementController extends Controller
      */
     public function index($user_email)
     {
-        return Advertisement::where('user_email', $user_email)->join('users', 'users.email', '=', 'user_email')->select('advertisements.*', 'users.name')->get();
+        $ads = Advertisement::where('user_email', $user_email)
+        ->join('users', 'users.email', '=', 'user_email')
+        ->join('courses', 'courses.id', '=', 'course_id')
+        ->leftjoin('advertisement_has_pictures', 'advertisement_has_pictures.advertisement_id', '=', 'advertisements.id')
+        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture', 'courses.name as course_name')->latest()->get();
+
+        $ads->map(function($item){
+            $item["tags"] = AdvertisementHasTags::where('advertisement_id', $item['id'])->get();
+        });
+
+        return $ads;
     }
 
     /**
@@ -51,7 +63,17 @@ class AdvertisementController extends Controller
      */
     public function show($id)
     {
-        return Advertisement::where('advertisements.id', $id)->join('users', 'users.email', '=', 'advertisements.user_email')->select('advertisements.*', 'users.name')->get();
+        $ads = Advertisement::where('advertisements.id', $id)
+        ->join('users', 'users.email', '=', 'advertisements.user_email')
+        ->join('courses', 'courses.id', '=', 'course_id')
+        ->leftjoin('advertisement_has_pictures', 'advertisement_has_pictures.advertisement_id', '=', 'advertisements.id')
+        ->select('advertisements.*', 'users.name', 'advertisement_has_pictures.picture', 'courses.name as course_name')->latest()->get();
+
+        $ads->map(function($ad){
+            $ad["tags"] = AdvertisementHasTags::where('advertisement_id', $ad["id"])->get();
+        });
+
+        return $ads;
     }
 
     /**
@@ -87,6 +109,7 @@ class AdvertisementController extends Controller
      */
     public function destroy($id)
     {
+        UserHasBookmarks::where("advertisement_id", $id)->delete();
         return Advertisement::destroy($id);
     }
 }
